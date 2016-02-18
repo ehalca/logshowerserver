@@ -54,6 +54,11 @@
     	<version>4.0.3.RELEASE</version>
     </dependency>
     <dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-websocket</artifactId>
+	<version>4.0.3.RELEASE</version>
+</dependency>
+    <dependency>
     	<groupId>org.springframework.data</groupId>
     	<artifactId>spring-data-commons-core</artifactId>
     	<version>1.4.0.RELEASE</version>
@@ -77,10 +82,12 @@
 			            <artifactId>jetty-maven-plugin</artifactId>
 			            <version>8.1.16.v20140903</version>
 			            <configuration>
+			             			<scanIntervalSeconds>5</scanIntervalSeconds>
 			             <webApp>
 			                    	<descriptor>${basedir}/src/main/webapp/WEB-INF/web.xml</descriptor>
 			                    	<contextPath>/logs</contextPath>
 			                    </webApp>
+			                    <classesDirectory>${project.basedir}//target/LogShower2-0.0.1-SNAPSHOT/WEB-INF/classes</classesDirectory>
 			            </configuration>
 			            </plugin>
     

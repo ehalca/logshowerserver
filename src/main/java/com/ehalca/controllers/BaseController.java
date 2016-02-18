@@ -45,7 +45,7 @@ public class BaseController extends LogContentController  {
 			
 			@Override
 			public LogFile getLogFile(SearchLogFileCriteria criteria) {
-				return new LogFile(new File("D:\\work\\jora.txt"));
+				return new LogFile(new File("C:\\Users\\ehalc\\workspace\\jora.txt"));
 			}
 		};
 	}
