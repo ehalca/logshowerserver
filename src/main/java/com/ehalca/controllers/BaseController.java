@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import ehalca.ilogshower.DetachedReadExecutor;
 import ehalca.ilogshower.LogContentController;
 import ehalca.ilogshower.logfile.LogFile;
 import ehalca.ilogshower.logfile.SearchLogFileCriteria;
@@ -48,5 +49,11 @@ public class BaseController extends LogContentController  {
 				return new LogFile(new File("C:\\Users\\ehalc\\workspace\\jora.txt"));
 			}
 		};
+	}
+
+	@Override
+	public DetachedReadExecutor getReadExecutor() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
