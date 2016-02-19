@@ -6,17 +6,23 @@
 </head>
 <body>
 <script type="text/javascript">
-var socket = new SockJS('/logs/random');
-var client = Stomp.over(socket);
 
-client.connect( function(frame) {
 
-  client.subscribe("/data", function(message) {
-  		console.log(message.body);
-  });
 
-});
+	$.ajax('/logs/initFile').done(function(data) {
+		var socket = new SockJS('/logs/random');
+		var client = Stomp.over(socket);
 
+		client.connect({}, function(frame) {
+
+			client.subscribe("/data/"+ data.id, function(message) {
+				console.log(message.body);
+			});
+			
+			client.send("/read/file", {}, JSON.stringify({ 'fileName': "jora", 'sessionId': data.id }));
+
+		});
+	})
 </script>
 </body>
 

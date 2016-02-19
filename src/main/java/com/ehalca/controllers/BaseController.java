@@ -7,6 +7,8 @@ import java.io.File;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.scheduling.SchedulingTaskExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +22,7 @@ import ehalca.ilogshower.LogContentController;
 import ehalca.ilogshower.logfile.LogFile;
 import ehalca.ilogshower.logfile.SearchLogFileCriteria;
 import ehalca.ilogshower.service.FileLogService;
+import ehalca.ilogshower.transport.FileLogConnectRequest;
 import ehalca.ilogshower.transport.InitLogFileResponse;
 
 /**
@@ -28,7 +31,13 @@ import ehalca.ilogshower.transport.InitLogFileResponse;
  */
 @Controller
 public class BaseController extends LogContentController  {
-
+	
+	@MessageMapping("/file")
+	public void onConnect(FileLogConnectRequest request){
+		super.onConnect("C:\\Users\\ehalc\\workspace\\jora.txt", request.getSessionId());
+	}
+	
+	
 	@RequestMapping("/page")
 	public ModelAndView getPage (){
 		return new ModelAndView("page");
@@ -52,8 +61,7 @@ public class BaseController extends LogContentController  {
 	}
 
 	@Override
-	public DetachedReadExecutor getReadExecutor() {
-		// TODO Auto-generated method stub
+	public SchedulingTaskExecutor getReadExecutor() {
 		return null;
 	}
 }
