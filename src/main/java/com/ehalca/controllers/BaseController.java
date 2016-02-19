@@ -17,9 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ehalca.ilogshower.DetachedReadExecutor;
 import ehalca.ilogshower.LogContentController;
 import ehalca.ilogshower.logfile.LogFile;
+import ehalca.ilogshower.logfile.MessageLogFileCriteria;
+import ehalca.ilogshower.logfile.MessageSearchLogFileCriteria;
 import ehalca.ilogshower.logfile.SearchLogFileCriteria;
 import ehalca.ilogshower.service.FileLogService;
 import ehalca.ilogshower.transport.FileLogConnectRequest;
@@ -34,7 +38,9 @@ public class BaseController extends LogContentController  {
 	
 	@MessageMapping("/file")
 	public void onConnect(FileLogConnectRequest request){
-		super.onConnect("C:\\Users\\ehalc\\workspace\\jora.txt", request.getSessionId());
+		ObjectMapper mapper = new ObjectMapper();
+		MessageLogFileCriteria criteria = new MessageSearchLogFileCriteria(mapper.convertValue(request, Map.class));
+		super.onConnect(criteria);
 	}
 	
 	
@@ -45,7 +51,7 @@ public class BaseController extends LogContentController  {
 	
 	@RequestMapping(value = "/initFile", method = RequestMethod.GET, produces = "application/json")
 	@Override
-	public @ResponseBody InitLogFileResponse initLogFile (@RequestParam Map<String, String> params){
+	public @ResponseBody InitLogFileResponse initLogFile (@RequestParam Map<String, Object> params){
 		return super.initLogFile(params);
 	}
 
@@ -55,7 +61,7 @@ public class BaseController extends LogContentController  {
 			
 			@Override
 			public LogFile getLogFile(SearchLogFileCriteria criteria) {
-				return new LogFile(new File("C:\\Users\\ehalc\\workspace\\jora.txt"));
+				return new LogFile(new File("D:\\work\\jora.txt"));
 			}
 		};
 	}

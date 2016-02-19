@@ -19,7 +19,7 @@
 				console.log(message.body);
 			});
 			
-			client.send("/read/file", {}, JSON.stringify({ 'fileName': "jora", 'sessionId': data.id }));
+			client.send("/read/file", {}, JSON.stringify({ 'fileName': "D:\\work\\jora.txt", 'sessionId': data.id }));
 
 		});
 	})

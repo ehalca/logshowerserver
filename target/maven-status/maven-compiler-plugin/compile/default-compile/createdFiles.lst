@@ -1,5 +1,5 @@
-com\ehalca\config\BaseConfig.class
-com\ehalca\controllers\BaseController$1.class
-com\ehalca\config\SpringWebAppInitializer.class
-com\ehalca\controllers\BaseController.class
 com\ehalca\config\MVCConfig.class
+com\ehalca\config\SpringWebAppInitializer.class
+com\ehalca\config\BaseConfig.class
+com\ehalca\controllers\BaseController.class
+com\ehalca\controllers\BaseController$1.class
