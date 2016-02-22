@@ -7,11 +7,11 @@
 <body>
 <script type="text/javascript">
 
-
+    var client = null;
 
 	$.ajax('/logs/initFile').done(function(data) {
 		var socket = new SockJS('/logs/random');
-		var client = Stomp.over(socket);
+		client = Stomp.over(socket);
 
 		client.connect({}, function(frame) {
 

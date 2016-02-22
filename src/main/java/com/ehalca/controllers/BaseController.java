@@ -6,7 +6,6 @@ package com.ehalca.controllers;
 import java.io.File;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.scheduling.SchedulingTaskExecutor;
 import org.springframework.stereotype.Controller;
@@ -15,11 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ehalca.ilogshower.DetachedReadExecutor;
 import ehalca.ilogshower.LogContentController;
 import ehalca.ilogshower.logfile.LogFile;
 import ehalca.ilogshower.logfile.MessageLogFileCriteria;
@@ -28,6 +25,7 @@ import ehalca.ilogshower.logfile.SearchLogFileCriteria;
 import ehalca.ilogshower.service.FileLogService;
 import ehalca.ilogshower.transport.FileLogConnectRequest;
 import ehalca.ilogshower.transport.InitLogFileResponse;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 
 /**
  * @author Hulk
@@ -37,12 +35,27 @@ import ehalca.ilogshower.transport.InitLogFileResponse;
 public class BaseController extends LogContentController  {
 	
 	@MessageMapping("/file")
-	public void onConnect(FileLogConnectRequest request){
+	public void onConnect(FileLogConnectRequest request, SimpMessageHeaderAccessor headerAccessor){
 		ObjectMapper mapper = new ObjectMapper();
 		MessageLogFileCriteria criteria = new MessageSearchLogFileCriteria(mapper.convertValue(request, Map.class));
-		super.onConnect(criteria);
+		super.onConnect(criteria, headerAccessor);
+	}
+        
+        @MessageMapping("/update")
+	public void onUpdate(FileLogConnectRequest request, SimpMessageHeaderAccessor headerAccessor){
+		ObjectMapper mapper = new ObjectMapper();
+		MessageLogFileCriteria criteria = new MessageSearchLogFileCriteria(mapper.convertValue(request, Map.class));
+		super.onUpdate(criteria, headerAccessor);
+	}
+        
+        @MessageMapping("/stop")
+	public void onStop(FileLogConnectRequest request, SimpMessageHeaderAccessor headerAccessor){
+		ObjectMapper mapper = new ObjectMapper();
+		MessageLogFileCriteria criteria = new MessageSearchLogFileCriteria(mapper.convertValue(request, Map.class));
+		super.onStop(criteria, headerAccessor);
 	}
 	
+        
 	
 	@RequestMapping("/page")
 	public ModelAndView getPage (){
